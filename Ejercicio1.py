@@ -9,7 +9,10 @@ def obtener_usuarios_con_contrasenas_debiles(cur, ruta_diccionario, top):
 
     contrasenas_diccionario_hasheadas = cargar_y_hashear_diccionario(ruta_diccionario)
     df_users["passwd_debil"] = df_users["contrasena"].apply(lambda x: es_contrasena_debil(x, contrasenas_diccionario_hasheadas))
-
+    df_users_passdebil = df_users[df_users["passwd_debil"]]
+    df_users_passdebil['phising_ratio'] = df_users_passdebil['phising_emails'] / df_users_passdebil['total_emails']
+    df_users_passdebil['click_probability'] = df_users_passdebil['clicados_emails'] / df_users_passdebil['total_emails']
+    df_users_passdebil['probability_spam'] = df_users_passdebil['phising_ratio'] * df_users_passdebil['click_probability']
     usuarios_criticos = df_users[df_users["passwd_debil"]]["usuario"].tolist()[:top]  # Obtener solo los nombres de usuario
     return usuarios_criticos
 
