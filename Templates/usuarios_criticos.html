@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios Críticos</title>
+</head>
+<body>
+    <h1>Usuarios Críticos</h1>
+    <form action="/usuarios_criticos" method="post">
+        <label for="num_usuarios">Número de Usuarios Críticos a Mostrar:</label>
+        <input type="number" id="num_usuarios" name="num_usuarios" min="1" required>
+        <button type="submit">Mostrar</button>
+    </form>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Usuario</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
