@@ -4,17 +4,20 @@ import hashlib
 
 #Función para obtener el top X de usuarios con contraseñas débiles
 def obtener_usuarios_con_contrasenas_debiles(cur, ruta_diccionario, top):
-    cursor = cur.execute("SELECT usuario, contrasena FROM usuarios")
-    df_users = pd.DataFrame(cursor.fetchall(), columns=['usuario', 'contrasena'])
+    cursor = cur.execute("SELECT usuario, contrasena, phishing_emails, clicados_emails  FROM usuarios")
+    df_users = pd.DataFrame(cursor.fetchall(), columns=['usuario', 'contrasena', 'phishing_emails', 'clicados_emails'])
 
     contrasenas_diccionario_hasheadas = cargar_y_hashear_diccionario(ruta_diccionario)
     df_users["passwd_debil"] = df_users["contrasena"].apply(lambda x: es_contrasena_debil(x, contrasenas_diccionario_hasheadas))
-    df_users_passdebil = df_users[df_users["passwd_debil"]]
-    df_users_passdebil['phising_ratio'] = df_users_passdebil['phising_emails'] / df_users_passdebil['total_emails']
-    df_users_passdebil['click_probability'] = df_users_passdebil['clicados_emails'] / df_users_passdebil['total_emails']
-    df_users_passdebil['probability_spam'] = df_users_passdebil['phising_ratio'] * df_users_passdebil['click_probability']
-    usuarios_criticos = df_users[df_users["passwd_debil"]]["usuario"].tolist()[:top]  # Obtener solo los nombres de usuario
-    return usuarios_criticos
+    df_users["prob_phishing"] = df_users["clicados_emails"]/df_users["phishing_emails"]
+    df_users["phishing_50"] = df_users["prob_phishing"].apply(lambda x: True if x > 0.5 else False)
+    usuarios_criticos_df = df_users[df_users["passwd_debil"]].sort_values(by="prob_phishing", ascending=False).head(top)  # Obtener solo los nombres de usuario
+    usuarios_criticos = usuarios_criticos_df["usuario"].tolist()
+    phishing_50 = usuarios_criticos_df["phishing_50"].tolist()
+    print("Longitud de usuarios_criticos:", len(usuarios_criticos))
+    print("Longitud de phishing_50:", len(phishing_50))
+
+    return usuarios_criticos, phishing_50
 
 #Función para obtener el top X de páginas web desactualizadas
 def obtener_top_paginas_desactualizadas(cur, top):

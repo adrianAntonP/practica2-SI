@@ -19,9 +19,10 @@ def mostrar_usuarios_criticos():
         num_usuarios_criticos = 5  #Valor default
 
     conexion = Ejercicio1.conexion_bd()  #conexión a  base de datos
-    usuarios_criticos = Ejercicio1.obtener_usuarios_con_contrasenas_debiles(conexion.cursor(), ruta_diccionario, top=num_usuarios_criticos)
+    usuarios_criticos, phishing_50 = Ejercicio1.obtener_usuarios_con_contrasenas_debiles(conexion.cursor(), ruta_diccionario, top=num_usuarios_criticos)
     conexion.close()  #Cerrar conexión la base de datos
-    return render_template('usuarios_criticos.html', usuarios=usuarios_criticos)
+    # Convertir el DataFrame en una lista
+    return render_template('usuarios_criticos.html', usuarios=usuarios_criticos, phishing_50=phishing_50)
 
 
 # Define la ruta para mostrar el top X de páginas web desactualizadas

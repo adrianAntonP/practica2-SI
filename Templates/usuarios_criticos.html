@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuarios Críticos</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <h1>Usuarios Críticos</h1>
@@ -12,19 +17,36 @@
         <input type="number" id="num_usuarios" name="num_usuarios" min="1" required>
         <button type="submit">Mostrar</button>
     </form>
+    <button id="toggleButton" onclick="toggleColumn()">Mostrar Phishing</button>
     <table border="1">
         <thead>
             <tr>
                 <th>Usuario</th>
+                <th id="phishingColumn" class="hidden">Spam > 50% </th>
             </tr>
         </thead>
         <tbody>
-            {% for usuario in usuarios %}
+            {% for i in range(usuarios|length) %}
             <tr>
-                <td>{{ usuario }}</td>
+                <td>{{ usuarios[i] }}</td>
+                <td class="hidden">{{ phishing_50[i] }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+    <script>
+        function toggleColumn() {
+            var column = document.getElementById("phishingColumn");
+            var cells = document.querySelectorAll("td:nth-child(2)");
+
+            if (column.classList.contains("hidden")) {
+                column.classList.remove("hidden");
+                cells.forEach(cell => cell.classList.remove("hidden"));
+            } else {
+                column.classList.add("hidden");
+                cells.forEach(cell => cell.classList.add("hidden"));
+            }
+        }
+    </script>
 </body>
 </html>
