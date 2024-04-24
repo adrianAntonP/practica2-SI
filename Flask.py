@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import Ejercicio1
 
 #instancia Flask
 app = Flask(__name__)
+app.secret_key = 'flaskeandobby_81'
 
 #ruta principal del panel de control
 @app.route('/')
@@ -37,6 +38,19 @@ def mostrar_paginas_desactualizadas():
     paginas_desactualizadas = Ejercicio1.obtener_top_paginas_desactualizadas(conexion.cursor(), top=num_paginas_desactualizadas)
     conexion.close()  #Cerrar conexión abase de datos
     return render_template('paginas_desactualizadas.html', paginas=paginas_desactualizadas)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if validar_credenciales(username, password):
+            session['username'] = username
+            return redirect('/perfil')
+        else:
+            return render_template('login.html', mensaje='Credenciales inválidas')
+    else:
+        return render_template('login.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
