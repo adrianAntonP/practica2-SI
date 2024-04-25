@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Últimas Vulnerabilidades</title>
+    <link rel="stylesheet" href="https://cdn.plot.ly/plotly-latest.min.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Últimas Vulnerabilidades</h1>
+
+    <div id="plot"></div>
+
+    <div id="explicaciones"></div> <script>
+        // Obtener datos de vulnerabilidades desde Flask
+        var vulnerabilidades = {{ vulnerabilidades | tojson }};
+
+        // Prepara los datos para el gráfico
+        var ids = [];
+        var descripciones = [];
+        var severidades = [];
+        var fechas = [];
+        var explicaciones = {}; // Diccionario para almacenar explicaciones
+
+        for (var i = 0; i < vulnerabilidades.length; i++) {
+            ids.push(vulnerabilidades[i].id);
+            descripciones.push(vulnerabilidades[i].summary);
+            severidades.push(vulnerabilidades[i].cvss);
+            fechas.push(new Date(vulnerabilidades[i].publishedAt));
+
+            // Almacena la explicación para cada CVE
+            explicaciones[vulnerabilidades[i].cve] = vulnerabilidades[i].summary;
+        }
+
+        // Crea el gráfico
+        var data = [{
+            x: ids,
+            y: ids, // Usa IDs para el eje Y (solo muestra barras)
+            customdata: severidades,
+            hovertemplate: "ID: %{x}<br>Fecha: %{text}<br>Severidad: %{customdata}",
+            type: 'bar',
+            marker: {
+                color: function(d) {
+                    return getColorBySeverity(d.customdata);
+                }
+            }
+        }];
+
+        // Función para obtener el color según la severidad
+        function getColorBySeverity(severity) {
+            if (severity >= 9) {
+                return 'red';
+            } else if (severity >= 7) {
+                return 'orange';
+            } else {
+                return 'yellow';
+            }
+        }
+
+        // Crear gráfico y mostrar explicaciones al hacer clic en una barra
+        Plotly.newPlot('plot', data, {
+            xaxis: {
+                title: 'ID de Vulnerabilidad'
+            },
+            title: {
+                text: 'Últimas 10 Vulnerabilidades',
+                xanchor: 'center'
+            },
+            annotations: [{
+                xref: 'paper',
+                yref: 'paper',
+                x: 0.95,
+                y: 0.95,
+                text: 'Fuente: CVE Search',
+                showarrow: false,
+                font: {
+                    size: 10,
+                    color: 'gray'
+                }
+            }]
+        }).on('plotly_click', function(event) {
+            if (event['points'].length > 0) {
+                var cve = event['points'][0]['x'];
+                mostrarExplicacion(cve);
+            }
+        });
+
+        // Función para mostrar la explicación de un CVE
+        function mostrarExplicacion(cve) {
+            if (explicaciones[cve]) {
+                document.getElementById('explicaciones').innerHTML = `
+                    <h2>Detalles de CVE: ${cve}</h2>
+                    <p>${explicaciones[cve]}</p>
+                `;
+            } else {
+                document.getElementById('explicaciones').innerHTML = `
+                    <h2>Detalles de CVE: ${cve}</h2>
+                    <p>Explicación no disponible.</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+

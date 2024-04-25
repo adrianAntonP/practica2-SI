@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 import Ejercicio1
+import ejercicio3
 
 #instancia Flask
 app = Flask(__name__)
@@ -51,6 +52,15 @@ def login():
             return render_template('login.html', mensaje='Credenciales inválidas')
     else:
         return render_template('login.html')
+
+@app.route('/lastVulnerabilities')
+def last_vulnerabilities():
+    data = ejercicio3.last_10_vulnerabilities()
+    if data:
+        return render_template('lastVulnerabilities.html', vulnerabilidades=data)
+    else:
+        return 'error', 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
