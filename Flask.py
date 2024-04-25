@@ -1,5 +1,8 @@
+import os
+
 from flask import Flask, render_template, request, redirect
 import Ejercicio1
+import matplotlib.pyplot as plt
 
 #instancia Flask
 app = Flask(__name__)
@@ -22,6 +25,16 @@ def mostrar_usuarios_criticos():
     conexion = Ejercicio1.conexion_bd()  #conexión a  base de datos
     usuarios_criticos, phishing_50 = Ejercicio1.obtener_usuarios_con_contrasenas_debiles(conexion.cursor(), ruta_diccionario, top=num_usuarios_criticos)
     conexion.close()  #Cerrar conexión la base de datos
+    # Generar gráfico de pastel
+    plt.figure(figsize=(6, 6))
+    plt.pie([phishing_50.count(True), phishing_50.count(False)], labels=['Spam > 50%', 'Spam <= 50%'],
+            autopct='%1.1f%%')
+    plt.title('Porcentaje de usuarios que clickaron > 50% phishing')
+
+    # Guardar la imagen en el directorio static
+    static_dir = os.path.join(app.root_path, 'static')
+    image_path = os.path.join(static_dir, 'pie_chart.png')
+    plt.savefig(image_path)
     # Convertir el DataFrame en una lista
     return render_template('usuarios_criticos.html', usuarios=usuarios_criticos, phishing_50=phishing_50)
 
@@ -39,7 +52,7 @@ def mostrar_paginas_desactualizadas():
     conexion.close()  #Cerrar conexión abase de datos
     return render_template('paginas_desactualizadas.html', paginas=paginas_desactualizadas)
 
-@app.route('/login', methods=['GET', 'POST'])
+""""@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form['username']
@@ -50,7 +63,7 @@ def login():
         else:
             return render_template('login.html', mensaje='Credenciales inválidas')
     else:
-        return render_template('login.html')
+        return render_template('login.html')"""
 
 if __name__ == '__main__':
     app.run(debug=True)
