@@ -5,13 +5,34 @@ import Ejercicio1
 import matplotlib.pyplot as plt
 
 #instancia Flask
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'flaskeandobby_81'
 
 #ruta principal del panel de control
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+@app.route('/showLogin')
+def showLogin():
+    return render_template('login/login.html')
+
+
+@app.route('/showSignUp')
+def showSignUp():
+    return render_template('login/sign_up.html')
+
+
+@app.route('/showForgotPass')
+def showForgotPass():
+    return render_template('login/forgot.html')
+
+
+@app.route('/showErrorLogIn')
+def showErrorLogIn():
+    return render_template('login/loginError.html')
+
 
 #ruta para mostrar el top X de usuarios críticos
 @app.route('/usuarios_criticos', methods=['GET', 'POST'])
@@ -52,18 +73,6 @@ def mostrar_paginas_desactualizadas():
     conexion.close()  #Cerrar conexión abase de datos
     return render_template('paginas_desactualizadas.html', paginas=paginas_desactualizadas)
 
-""""@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        if validar_credenciales(username, password):
-            session['username'] = username
-            return redirect('/perfil')
-        else:
-            return render_template('login.html', mensaje='Credenciales inválidas')
-    else:
-        return render_template('login.html')"""
 
 if __name__ == '__main__':
     app.run(debug=True)
