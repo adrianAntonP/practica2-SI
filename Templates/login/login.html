@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>LogIn</title>
-    <link rel="stylesheet" href="/login/login.css">
-    <script src="/login/eyehide.js"></script>
+    <title>LOG IN</title>
+    <link rel="stylesheet" href="/static/css/login.css">
+    <script src="/static/js/eyehide.js"></script>
 </head>
 <body>
 <div class="box">
@@ -18,12 +18,12 @@
         <div class="inputBox">
             <input type="password" name="passwordInput" id="passwordInput" required="required">
             <span>Password</span>
-            <img src="/login/img/hide.png" id="eyeIcon" onclick="togglePasswordVisibility()">
+            <img src="/static/img/hide.png" id="eyeIcon" onclick="togglePasswordVisibility()">
             <i></i>
         </div>
         <div class="links">
-            <a href="/login/forgot.html">Forgot Password ?</a>
-            <a href="/login/sign_up.html">Sign up</a>
+            <a href="/showForgotPass">Forgot Password ?</a>
+            <a href="/showSignUp">Sign up</a>
         </div>
         <input type="hidden" name="_csrf" value="{{tokenCSRF}}"/>
         <button type="submit" value="Enviar" >Enviar</button>
