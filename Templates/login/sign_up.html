@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
-  <title>SIGN UP MUSTACHE</title>
-  <script src="/login/eyehide.js"></script>
-  <link rel="stylesheet" href="/login/sign_up.css">
+  <title>SIGN UP</title>
+  <script src="/static/js/eyehide.js"></script>
+  <link rel="stylesheet" href="/static/css/sign_up.css">
 </head>
 <body>
 <div class="box">
@@ -44,21 +44,20 @@
       <div class="inputBox2">
         <input type="password" name="passwordInput" id="passwordInput" required="required" oninput="PassRequirements()">
         <span>Password</span>
-        <img src="/login/img/hide.png" id="eyeIcon" onclick="togglePasswordVisibility()">
+        <img src="/static/img/hide.png" id="eyeIcon" onclick="togglePasswordVisibility()">
         <i></i>
       </div>
       <div class="inputBox2">
         <input type="password" name="passwordInputTwo" id="passwordInputTwo" required="required">
         <span>Confirm Pass</span>
-        <img src="/login/img/hide.png" id="eyeIconTwo" onclick="togglePasswordVisibilityTwo()">
+        <img src="/static/img/hide.png" id="eyeIconTwo" onclick="togglePasswordVisibilityTwo()">
         <i></i>
       </div>
     </div>
     <div class="links">
-      <a href="/login/login.html">Log In</a>
+      <a href="/showLogin">Log In</a>
     </div>
     <div class="two">
-      <input type="hidden" name="_csrf" value="{{tokenCSRF}}"/>
       <button type="submit" value="Enviar" >Enviar</button>
 
       <div class="requirements-container">

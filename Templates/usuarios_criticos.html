@@ -34,17 +34,21 @@
             {% endfor %}
         </tbody>
     </table>
+    <img id="pieChart" src="{{ url_for('static', filename='pie_chart.png') }}" alt="Gráfico de Pastel" class="hidden">
     <script>
         function toggleColumn() {
             var column = document.getElementById("phishingColumn");
             var cells = document.querySelectorAll("td:nth-child(2)");
+            var pieChart = document.getElementById("pieChart");
 
             if (column.classList.contains("hidden")) {
                 column.classList.remove("hidden");
                 cells.forEach(cell => cell.classList.remove("hidden"));
+                pieChart.classList.remove("hidden"); // Mostrar el gráfico de pastel
             } else {
                 column.classList.add("hidden");
                 cells.forEach(cell => cell.classList.add("hidden"));
+                pieChart.classList.add("hidden"); // Ocultar el gráfico de pastel
             }
         }
     </script>

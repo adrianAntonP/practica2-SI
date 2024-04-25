@@ -4,10 +4,10 @@ function togglePasswordVisibility() {
 
     if (passwordInput.type === "password") {
         passwordInput.type = "text";
-        toggleButton.src = "/login/img/view.png";
+        toggleButton.src = "/static/img/view.png";
     } else {
         passwordInput.type = "password";
-        toggleButton.src = "/login/img/hide.png";
+        toggleButton.src = "/static/img/hide.png";
     }
 }
 function togglePasswordVisibilityTwo() {
@@ -16,10 +16,10 @@ function togglePasswordVisibilityTwo() {
 
     if (passwordInput.type === "password") {
         passwordInput.type = "text";
-        toggleButton.src = "/login/img/view.png";
+        toggleButton.src = "/static/img/view.png";
     } else {
         passwordInput.type = "password";
-        toggleButton.src = "/login/img/hide.png";
+        toggleButton.src = "/static/img/hide.png";
     }
 }
 
