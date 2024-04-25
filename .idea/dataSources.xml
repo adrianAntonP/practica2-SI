@@ -15,5 +15,12 @@
       <jdbc-url>mongodb+srv://mybdsi.0mxodue.mongodb.net/myBDSI</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="ETL_system" uuid="96c61f02-902b-40ef-943e-68b9ecd87fc7">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\volti\OneDrive\Documentos\GitHub\practica2-SI\ETL_system.db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LogIn</title>
+    <link rel="stylesheet" href="/login/login.css">
+    <script src="/login/eyehide.js"></script>
+</head>
+<body>
+<div class="box">
+    <form id="LogIn" action="/login" method="post">
+        <h2>Log in</h2>
+        <div class="inputBox">
+            <input type="text" name="dni" id="dni" required="required">
+            <span>DNI</span>
+            <i></i>
+        </div>
+        <div class="inputBox">
+            <input type="password" name="passwordInput" id="passwordInput" required="required">
+            <span>Password</span>
+            <img src="/login/img/hide.png" id="eyeIcon" onclick="togglePasswordVisibility()">
+            <i></i>
+        </div>
+        <div class="links">
+            <a href="/login/forgot.html">Forgot Password ?</a>
+            <a href="/login/sign_up.html">Sign up</a>
+        </div>
+        <input type="hidden" name="_csrf" value="{{tokenCSRF}}"/>
+        <button type="submit" value="Enviar" >Enviar</button>
+    </form>
+</div>
+</body>
+</html>
