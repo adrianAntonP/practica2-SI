@@ -73,6 +73,6 @@ def insert_data_legal(json_file):
 
 if __name__ == "__main__":
     create_db_table()
-    insert_data_users('users_data_online_clasificado.json')
+    insert_data_users('users_data_online.json')
     insert_data_legal('legal_data_online.json')
     print("Data inserted successfully.")
