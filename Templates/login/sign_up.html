@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SIGN UP MUSTACHE</title>
+  <script src="/login/eyehide.js"></script>
+  <link rel="stylesheet" href="/login/sign_up.css">
+</head>
+<body>
+<div class="box">
+  <form  action="/formSignUp" id="SignUp">
+    <h2>Sign up</h2>
+
+    <div class="two">
+      <div class="inputBox2">
+        <input type="text" name="Name" id="Name" required="required">
+        <span>Name</span>
+        <i></i>
+      </div>
+      <div class="inputBox2">
+        <input type="text" name="Surname" id="Surname" required="required">
+        <span>Surname</span>
+        <i></i>
+      </div>
+    </div>
+    <div class="two">
+      <div class="inputBox2">
+        <input type="text" name="dni" id="dni" required="required">
+        <span>DNI</span>
+        <i></i>
+      </div>
+      <div class="inputBox2">
+        <input type="text" name="NumberPhone" id="NumberPhone" required="required">
+        <span>Number Phone</span>
+        <i></i>
+      </div>
+    </div>
+    <div class="inputBox">
+      <input type="email" name="email" id="email" required="required">
+      <span>Email</span>
+      <i></i>
+    </div>
+    <div class="two">
+      <div class="inputBox2">
+        <input type="password" name="passwordInput" id="passwordInput" required="required" oninput="PassRequirements()">
+        <span>Password</span>
+        <img src="/login/img/hide.png" id="eyeIcon" onclick="togglePasswordVisibility()">
+        <i></i>
+      </div>
+      <div class="inputBox2">
+        <input type="password" name="passwordInputTwo" id="passwordInputTwo" required="required">
+        <span>Confirm Pass</span>
+        <img src="/login/img/hide.png" id="eyeIconTwo" onclick="togglePasswordVisibilityTwo()">
+        <i></i>
+      </div>
+    </div>
+    <div class="links">
+      <a href="/login/login.html">Log In</a>
+    </div>
+    <div class="two">
+      <input type="hidden" name="_csrf" value="{{tokenCSRF}}"/>
+      <button type="submit" value="Enviar" >Enviar</button>
+
+      <div class="requirements-container">
+        <div id="requirements0">
+          <span>Minimo 8 caracteres</span>
+        </div>
+        <div id="requirements1">
+          <span>Al menos un caracter especial</span>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>
+</body>
+</html>
