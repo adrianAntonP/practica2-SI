@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Páginas Desactualizadas</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .circle {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .green {
+            background-color: green;
+        }
+        .red {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Páginas Desactualizadas</h1>
+    <form action="/paginas_desactualizadas" method="post">
+        <label for="num_paginas">Número de Páginas Desactualizadas a Mostrar:</label>
+        <input type="number" id="num_paginas" name="num_paginas" min="1" required>
+        <button type="submit">Mostrar</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Web</th>
+                <th>Cookies Desactualizadas</th>
+                <th>Aviso Desactualizado</th>
+                <th>Protección de Datos Desactualizada</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pagina in paginas %}
+            <tr>
+                <td>{{ pagina.web }}</td>
+                <td><span class="circle {% if pagina.cookies_desactualizadas == 1 %}green{% else %}red{% endif %}"></span></td>
+                <td><span class="circle {% if pagina.aviso_desactualizado == 1 %}green{% else %}red{% endif %}"></span></td>
+                <td><span class="circle {% if pagina.proteccion_datos_desactualizada == 1 %}green{% else %}red{% endif %}"></span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
