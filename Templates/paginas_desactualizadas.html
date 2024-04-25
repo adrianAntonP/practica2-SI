@@ -17,6 +17,18 @@
         th {
             background-color: #f2f2f2;
         }
+        .circle {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .green {
+            background-color: green;
+        }
+        .red {
+            background-color: red;
+        }
     </style>
 </head>
 <body>
@@ -39,9 +51,9 @@
             {% for pagina in paginas %}
             <tr>
                 <td>{{ pagina.web }}</td>
-                <td>{{ pagina.cookies_desactualizadas }}</td>
-                <td>{{ pagina.aviso_desactualizado }}</td>
-                <td>{{ pagina.proteccion_datos_desactualizada }}</td>
+                <td><span class="circle {% if pagina.cookies_desactualizadas == 1 %}green{% else %}red{% endif %}"></span></td>
+                <td><span class="circle {% if pagina.aviso_desactualizado == 1 %}green{% else %}red{% endif %}"></span></td>
+                <td><span class="circle {% if pagina.proteccion_datos_desactualizada == 1 %}green{% else %}red{% endif %}"></span></td>
             </tr>
             {% endfor %}
         </tbody>
