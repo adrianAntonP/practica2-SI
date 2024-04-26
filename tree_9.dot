@@ -1,0 +1,13 @@
+digraph Tree {
+node [shape=box, style="filled, rounded", color="black", fontname="helvetica"] ;
+edge [fontname="helvetica"] ;
+0 [label="phishing_emails <= 31.5\ngini = 0.39\nsamples = 21\nvalue = [22, 8]\nclass = No Crítico", fillcolor="#eeaf81"] ;
+1 [label="gini = 0.0\nsamples = 7\nvalue = [9, 0]\nclass = No Crítico", fillcolor="#e58139"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="phishing_emails <= 99.0\ngini = 0.47\nsamples = 14\nvalue = [13, 8]\nclass = No Crítico", fillcolor="#f5cfb3"] ;
+0 -> 2 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+3 [label="gini = 0.0\nsamples = 4\nvalue = [0, 5]\nclass = Crítico", fillcolor="#399de5"] ;
+2 -> 3 ;
+4 [label="gini = 0.3\nsamples = 10\nvalue = [13, 3]\nclass = No Crítico", fillcolor="#eb9e67"] ;
+2 -> 4 ;
+}
