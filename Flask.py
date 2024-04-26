@@ -1,9 +1,14 @@
 import os
 
+import joblib
+import pandas as pd
 from flask import Flask, render_template, request, redirect
 import Ejercicio1
 import matplotlib.pyplot as plt
 
+import Ejercicio5_1
+import Ejercicio5_2
+import Ejercicio5_3
 import ejercicio3
 
 #instancia Flask
@@ -82,5 +87,44 @@ def last_vulnerabilities():
         return render_template('lastVulnerabilities.html', vulnerabilidades=data)
     else:
         return 'error', 500
+
+
+
+linear_model = joblib.load('linear_model.pkl')
+decision_tree_model = joblib.load('decision_tree_model.pkl')
+random_forest_model = joblib.load('random_forest_model.pkl')
+
+
+def preprocess_input(data):
+
+    return pd.DataFrame(data, index=[0])
+
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+
+@app.route('/predict', methods=['POST'])
+def predict():
+
+    user_data = request.form.to_dict()
+
+
+    input_data = preprocess_input(user_data)
+
+
+    linear_prediction = Ejercicio5_1.predict(input_data)
+    decision_tree_prediction = Ejercicio5_2.predict(input_data)
+    random_forest_prediction = Ejercicio5_3.predict(input_data)
+
+    # Format predictions
+    predictions = {
+        'Linear Model': 'Critical' if linear_prediction[0] else 'Non-Critical',
+        'Decision Tree': 'Critical' if decision_tree_prediction[0] else 'Non-Critical',
+        'Random Forest': 'Critical' if random_forest_prediction[0] else 'Non-Critical'
+    }
+
+    return render_template('esCriticoOno.html', predictions=predictions)
 if __name__ == '__main__':
     app.run(debug=True)
