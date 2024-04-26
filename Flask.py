@@ -4,6 +4,8 @@ from flask import Flask, render_template, request, redirect
 import Ejercicio1
 import matplotlib.pyplot as plt
 
+import ejercicio3
+
 #instancia Flask
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'flaskeandobby_81'
@@ -73,6 +75,12 @@ def mostrar_paginas_desactualizadas():
     conexion.close()  #Cerrar conexión abase de datos
     return render_template('paginas_desactualizadas.html', paginas=paginas_desactualizadas)
 
-
+@app.route('/lastVulnerabilities')
+def last_vulnerabilities():
+    data = ejercicio3.last_10_vulnerabilities()
+    if data:
+        return render_template('lastVulnerabilities.html', vulnerabilidades=data)
+    else:
+        return 'error', 500
 if __name__ == '__main__':
     app.run(debug=True)
