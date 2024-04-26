@@ -4,13 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Últimas Vulnerabilidades</title>
+    <link rel="stylesheet" href="/static/css/styleVuln.css">
 </head>
 <body>
-    <h1>Últimas Vulnerabilidades</h1>
-    <ul>
-        {% for vulnerabilidad in vulnerabilidades %}
-            <li>{{ vulnerabilidad.id }} - {{ vulnerabilidad.summary }}</li>
-        {% endfor %}
-    </ul>
+    <div class="table-container">
+        <h1>Últimas Vulnerabilidades</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>CVE</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vulnerabilidad in vulnerabilidades %}
+                <tr>
+                    <td>{{ vulnerabilidad.id }}</td>
+                    <td>{{ vulnerabilidad.summary }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
+
