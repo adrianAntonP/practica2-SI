@@ -11,7 +11,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* Estilos para la tabla */
 table {
     border-collapse: collapse;
     width: 100%;
@@ -28,7 +27,6 @@ th {
     background-color: #f2f2f2;
 }
 
-/* Estilos para los círculos */
 .circle {
     height: 20px;
     width: 20px;
@@ -37,17 +35,14 @@ th {
     margin-right: 5px;
 }
 
-/* Estilos para los círculos verdes */
 .green {
     background-color: green;
 }
 
-/* Estilos para los círculos rojos */
 .red {
     background-color: red;
 }
 
-/* Estilos para el formulario */
 form {
     text-align: center;
     margin-bottom: 20px;
