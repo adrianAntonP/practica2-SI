@@ -23,13 +23,12 @@ def sign_up(username, telefono, contrasena, provincia, permisos, emailtotal, ema
     c = conn.cursor()
 
     c.execute('SELECT COUNT(*) FROM usuarios WHERE usuario = ?', (username,))
-    c.fetchone()
+    result = c.fetchone()
 
-    if c.fetchone()[0] == 0:
+    if result[0] == 0:
         c.execute("INSERT OR IGNORE INTO usuarios VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (username, telefono, contrasena, provincia, permisos, emailtotal, emailphishing, emailclicados, fechas, ips))
 
     c.close()
-
 
 def getCriticalUser():
     conn = connsql3.conectar_db()
