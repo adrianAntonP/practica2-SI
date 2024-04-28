@@ -1,5 +1,4 @@
 import os
-from statistics import LinearRegression
 
 import joblib
 import pandas as pd
@@ -91,53 +90,6 @@ def last_vulnerabilities():
         return render_template('lastVulnerabilities.html', vulnerabilidades=data)
     else:
         return 'error', 500
-
-@app.route('/analizarUsuario', methods=['GET', 'POST'])
-def analizar_usuario():
-    if request.method == 'POST':
-        nombre = request.form['nombre']
-        telefono = request.form['telefono']
-        provincia = request.form['provincia']
-        permisos = float(request.form['permisos'])
-        total_emails = float(request.form['total_emails'])
-        phishing_emails = float(request.form['phishing_emails'])
-        clicados_emails = float(request.form['clicados_emails'])
-        metodo = request.form['metodo']
-
-#analizar
-        if metodo == 'regresion_lineal':
-            resultado = analizar_usuario_regresion_lineal(permisos, total_emails, phishing_emails, clicados_emails)
-        elif metodo == 'decision_tree':
-            resultado = analizar_usuario_decision_tree(total_emails, phishing_emails, clicados_emails)
-        elif metodo == 'random_forest':
-            resultado = analizar_usuario_random_forest(total_emails, phishing_emails, clicados_emails)
-        else:
-            resultado = "Método no válido"
-
-        return render_template('esCriticoOno.html', nombre=nombre, resultado=resultado)
-    else:
-        return render_template('analizarUsuario.html')
-
-def analizar_usuario_regresion_lineal(permisos, total_emails, phishing_emails, clicados_emails):
-    regr = LinearRegression()
-    regr.fit([[clicados_emails / phishing_emails]], [0])  # Se ajusta a 0 porque no se usa en la predicción
-    critico = regr.predict([[clicados_emails / phishing_emails]])
-    return "Crítico" if critico > 0.5 else "No Crítico"
-
-def analizar_usuario_decision_tree(total_emails, phishing_emails, clicados_emails):
-    clf = DecisionTreeClassifier()
-    clf.fit([[total_emails, phishing_emails, clicados_emails]], [0])  # Se ajusta a 0 porque no se usa en la predicción
-    critico = clf.predict([[total_emails, phishing_emails, clicados_emails]])
-    return "Crítico" if critico == 1 else "No Crítico"
-
-def analizar_usuario_random_forest(total_emails, phishing_emails, clicados_emails):
-    # carga entrenamiento y guardado con joab
-
-    clf = RandomForestClassifier()
-    clf.fit([[total_emails, phishing_emails, clicados_emails]], [0])  # Se ajusta a 0 porque no se usa en la predicción
-    critico = clf.predict([[total_emails, phishing_emails, clicados_emails]])
-    return "Crítico" if critico == 1 else "No Crítico"
-
 
 
 if __name__ == '__main__':
