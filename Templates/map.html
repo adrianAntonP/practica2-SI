@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Mapa de Usuarios Criticos</title>
+      <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #map-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        #map {
+            height: 600px;
+            width: 60%;
+        }
+    </style>
+</head>
+<body>
+       <div id="map-container">
+        <div id="map"></div>
+    </div>
+    <script>
+
+        function initMap() {
+            // Crear el mapa
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 40.4165, lng: -3.70256}, // Centrar en Madrid
+                zoom: 6 // Zoom inicial
+            });
+
+
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5ZSrloY6H5iKMELsk1hMTib-vV676i-Q&callback=initMap"></script>
+</body>
+</html>

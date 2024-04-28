@@ -41,8 +41,11 @@ def showForgotPass():
 def showErrorLogIn():
     return render_template('login/loginError.html')
 
+@app.route('/showMap')
+def showMap():
+    return render_template('map.html')
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     username = request.form.get('username')
     password = request.form.get('passwordInput')
@@ -53,7 +56,7 @@ def login():
         return render_template('login/loginError.html')
 
 
-@app.route('/formSignUp', methods=['POST'])
+@app.route('/formSignUp', methods=['GET', 'POST'])
 def formSignUp():
     username = request.form.get('Username')
     province = request.form.get('Province')
