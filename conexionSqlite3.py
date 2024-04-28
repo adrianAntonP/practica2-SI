@@ -24,33 +24,7 @@ def create_db_table():
     conn.commit()
     conn.close()
 
-def check_credentials(username, password):
-    #Connect to database
-    conn = conectar_db()
-    c = conn.cursor()
 
-    c.execute("SELECT contrasena FROM usuarios WHERE usuario = ?", (username,))
-    result = c.fetchone()
-
-    if result and result[0] == password:
-        conn.close()
-        return True
-    else:
-        conn.close()
-        return False
-
-
-def sign_up(username, telefono, contrasena, provincia, permisos, emailtotal, emailphishing, emailclicados, fechas, ips):
-    conn = conectar_db()
-    c = conn.cursor()
-
-    c.execute('SELECT COUNT(*) FROM usuarios WHERE usuario = ?', (username,))
-    c.fetchone()
-
-    if c.fetchone()[0] == 0:
-        c.execute("INSERT OR IGNORE INTO usuarios VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (username, telefono, contrasena, provincia, permisos, emailtotal, emailphishing, emailclicados, fechas, ips))
-
-    c.close()
 
 
 

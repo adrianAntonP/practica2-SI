@@ -1,6 +1,6 @@
 import os
 
-
+import googlemaps
 from flask import Flask, render_template, request, redirect
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 
 import ejercicio3
-import conexionSqlite3 as Connsql3
+import Ejercicio4
 
 # instancia Flask
 app = Flask(__name__, static_url_path='/static')
@@ -43,14 +43,32 @@ def showErrorLogIn():
 
 @app.route('/showMap')
 def showMap():
-    return render_template('map.html')
+    usuarios_criticos = Ejercicio4.getCriticalUser()
+
+    gmaps = googlemaps.Client(key='AIzaSyC5ZSrloY6H5iKMELsk1hMTib-vV676i-Q')
+
+
+    marcadores = []
+    for usuario in usuarios_criticos:
+        email_phishing, email_clicados, provincia = usuario
+        if provincia is not None:
+            geocode_result = gmaps.geocode(provincia)
+            if geocode_result:
+                latitud = geocode_result[0]['geometry']['location']['lat']
+                longitud = geocode_result[0]['geometry']['location']['lng']
+                marcadores.append({'lat': latitud, 'lng': longitud,
+                                   'infowindow': f'Phishing: {email_phishing}, Clicados: {email_clicados}, Provincia: {provincia}'})
+
+
+    return render_template('map.html', marcadores=marcadores)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     username = request.form.get('username')
     password = request.form.get('passwordInput')
 
-    if Connsql3.check_credentials(username, password):
+    if Ejercicio4.check_credentials(username, password):
         return render_template('index.html')
     else:
         return render_template('login/loginError.html')
@@ -69,7 +87,7 @@ def formSignUp():
     permissions = request.form.get('Permissions')
     password = request.form.get('passwordInput')
 
-    Connsql3.sign_up(username, numberphone, password, province, permissions, totalEmails, phishingEmails, clickEmails, date, ips)
+    Ejercicio4.sign_up(username, numberphone, password, province, permissions, totalEmails, phishingEmails, clickEmails, date, ips)
 
     return render_template('login/login.html')
 

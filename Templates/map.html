@@ -3,30 +3,52 @@
 <head>
     <meta charset="utf-8">
     <title>Mapa de Usuarios Criticos</title>
-      <style>
+         <style>
         body, html {
             height: 100%;
             margin: 0;
             padding: 0;
+            background-color: #222;
+            color: white;
         }
         #map-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100%;
+            height: 90%;
+            flex-direction: column;
         }
         #map {
             height: 600px;
             width: 60%;
         }
+        .titulo {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .subtitulo {
+            text-align: center;
+        }
+        #boton-volver {
+            background-color: #45f3ff;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px
+        }
     </style>
 </head>
 <body>
-       <div id="map-container">
+    <div id="map-container">
+        <h1 class="titulo">Mapa Usuarios Críticos</h1>
+        <h3 class="subtitulo">En el siguiente mapa podremos observar la localidad de los usuarios críticos</h3>
         <div id="map"></div>
+        <button id="boton-volver" onclick="window.location.href='/'">Volver a Index</button>
     </div>
-    <script>
-
+     <script>
         function initMap() {
             // Crear el mapa
             var map = new google.maps.Map(document.getElementById('map'), {
@@ -34,7 +56,15 @@
                 zoom: 6 // Zoom inicial
             });
 
-
+            // Crear marcadores para cada usuario crítico
+            var marcadores = {{ marcadores | tojson }};
+            for (var i = 0; i < marcadores.length; i++) {
+                var marcador = marcadores[i];
+                var marker = new google.maps.Marker({
+                    position: {lat: marcador.lat, lng: marcador.lng},
+                    map: map
+                });
+            }
         }
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5ZSrloY6H5iKMELsk1hMTib-vV676i-Q&callback=initMap"></script>
