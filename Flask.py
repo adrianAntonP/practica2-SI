@@ -41,8 +41,11 @@ def showForgotPass():
 def showErrorLogIn():
     return render_template('login/loginError.html')
 
+@app.route('/showMap')
+def showMap():
+    return render_template('map.html')
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     username = request.form.get('username')
     password = request.form.get('passwordInput')
@@ -53,7 +56,7 @@ def login():
         return render_template('login/loginError.html')
 
 
-@app.route('/formSignUp', methods=['POST'])
+@app.route('/formSignUp', methods=['GET', 'POST'])
 def formSignUp():
     username = request.form.get('Username')
     province = request.form.get('Province')
@@ -120,6 +123,27 @@ def last_vulnerabilities():
         return render_template('lastVulnerabilities.html', vulnerabilidades=vulnerabilidades)
     else:
         return 'error', 500
+
+
+@app.route('/analizarUsuario', methods=['GET', 'POST'])
+def formulario_usuario():
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        telefono = request.form['telefono']
+        provincia = request.form['provincia']
+        permisos = request.form['permisos']
+        total_emails = request.form['total_emails']
+        phishing_emails = request.form['phishing_emails']
+        clicados_emails = request.form['clicados_emails']
+        return render_template('esCriticoOno.html')
+
+    return render_template('analizarUsuario.html')
+
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
