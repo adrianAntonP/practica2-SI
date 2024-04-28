@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 
 import googlemaps
 from flask import Flask, render_template, request, redirect, session, url_for, flash
@@ -15,16 +16,16 @@ import Ejercicio4
 # instancia Flask
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'flaskeandobby_81'
+app.permanent_session_lifetime = timedelta(minutes=30)
 
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'logged_in' not in session:
+        if 'username' not in session:
             flash('Debes iniciar sesión para acceder a esta página.', 'error')
             return redirect(url_for('showLogin'))
         return f(*args, **kwargs)
     return decorated_function
-
 # ruta principal del panel de control
 @app.route('/')
 @login_required
@@ -80,6 +81,7 @@ def login():
     password = request.form.get('passwordInput')
 
     if Ejercicio4.check_credentials(username, password):
+        session['logged_in'] = True
         session['username'] = username
         return render_template('index.html')
     else:

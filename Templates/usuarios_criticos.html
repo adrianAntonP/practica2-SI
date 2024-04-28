@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <title>Usuarios Críticos</title>
     <style>
         .hidden {
@@ -57,6 +58,7 @@
                     </tr>
                     {% endfor %}
                 </tbody>
+                <button id="pdfButton" onclick="generatePDF()" disabled>Descargar PDF</button>
             </table>
         </div>
         <div class="chart-container">
@@ -64,19 +66,26 @@
         </div>
     </div>
     <script>
+        function generatePDF() {
+            var element = document.getElementById("pieChart");
+            html2pdf().from(element).save();
+        }
         function toggleColumn() {
             var column = document.getElementById("phishingColumn");
             var cells = document.querySelectorAll("td:nth-child(2)");
             var pieChart = document.getElementById("pieChart");
+            var pdfButton = document.getElementById("pdfButton");
 
             if (column.classList.contains("hidden")) {
                 column.classList.remove("hidden");
                 cells.forEach(cell => cell.classList.remove("hidden"));
-                pieChart.classList.remove("hidden"); // Mostrar el gráfico de pastel
+                pieChart.classList.remove("hidden");
+                pdfButton.disabled = false;
             } else {
                 column.classList.add("hidden");
                 cells.forEach(cell => cell.classList.add("hidden"));
-                pieChart.classList.add("hidden"); // Ocultar el gráfico de pastel
+                pieChart.classList.add("hidden");
+                pdfButton.disabled = true;
             }
         }
     </script>
