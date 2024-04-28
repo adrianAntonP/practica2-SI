@@ -1,21 +1,15 @@
 import requests
-
 def last_10_vulnerabilities():
     url = "https://cve.circl.lu/api/last"
     try:
-        aux = requests.get(url)
-        if aux.status_code == 200:
-            return aux.json()[:10]
+        response = requests.get(url)
+        if response.status_code == 200: #indica que todo bien y podra coger las ultimas 10
+            aux = response.json()
+            last_10 = aux[:10]
+            return last_10
         else:
-            print("error:", aux.status_code)
             return None
-    except requests.exceptions.RequestException as e:
-        print("error:", e)
-        return None
 
-last_vulnerabilities = last_10_vulnerabilities()
-if last_vulnerabilities:
-    for i, vuln in enumerate(last_vulnerabilities, 1):
-        print(f"{i}. CVE: {vuln['id']} - Descripción: {vuln.get('summary')}")
-else:
-    print("error")
+    except Exception as error:
+        print(f"error, {error}")
+        return None

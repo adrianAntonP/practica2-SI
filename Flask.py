@@ -1,7 +1,6 @@
 import os
 
-import joblib
-import pandas as pd
+
 from flask import Flask, render_template, request, redirect
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
@@ -106,12 +105,11 @@ def mostrar_paginas_desactualizadas():
 
 @app.route('/lastVulnerabilities')
 def last_vulnerabilities():
-    data = ejercicio3.last_10_vulnerabilities()
-    if data:
-        return render_template('lastVulnerabilities.html', vulnerabilidades=data)
+    vulnerabilidades = ejercicio3.last_10_vulnerabilities()
+    if vulnerabilidades:
+        return render_template('lastVulnerabilities.html', vulnerabilidades=vulnerabilidades)
     else:
         return 'error', 500
-
 
 if __name__ == '__main__':
     app.run(debug=True)
