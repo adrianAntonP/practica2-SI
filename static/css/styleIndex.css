@@ -1,32 +1,43 @@
+/* styleIndex.css */
+
+/* Estilos generales */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    margin: 0 auto;
+    margin: 0;
     padding: 0;
-    max-width: 800px;
-    margin-left: 20px;
+    background-color: #333; /* Fondo oscuro */
+    color: #fff; /* Texto en blanco */
 }
-title{
-    text-align: center;
-}
+
+/* Encabezado */
 h1 {
-    color: #333;
     text-align: center;
-    padding: 20px;
+    padding: 20px 0;
 }
+
+/* Lista de enlaces */
 ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
+
+/* Enlaces */
 li {
     margin-bottom: 10px;
 }
-a {
+
+li a {
+    display: block;
+    padding: 10px;
     text-decoration: none;
-    color: #0074d9;
-    font-weight: bold;
+    color: #ddd; /* Color de enlaces */
+    background-color: #444; /* Fondo de enlaces */
+    border: 1px solid #555;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
-a:hover {
-    text-decoration: underline;
+
+li a:hover {
+    background-color: #2859ad; /* Fondo de enlaces al pasar el ratón */
 }

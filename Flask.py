@@ -1,18 +1,15 @@
 import os
 
-import joblib
-import pandas as pd
+
 from flask import Flask, render_template, request, redirect
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 import Ejercicio1
 import matplotlib.pyplot as plt
 
-import Ejercicio5_1
-import Ejercicio5_2
-import Ejercicio5_3
+
 import ejercicio3
-import conexionSqlite3 as connsql3
+import conexionSqlite3 as Connsql3
 
 # instancia Flask
 app = Flask(__name__, static_url_path='/static')
@@ -50,7 +47,7 @@ def login():
     username = request.form.get('username')
     password = request.form.get('passwordInput')
 
-    if connsql3.check_credentials(username, password):
+    if Connsql3.check_credentials(username, password):
         return render_template('index.html')
     else:
         return render_template('login/loginError.html')
@@ -69,7 +66,7 @@ def formSignUp():
     permissions = request.form.get('Permissions')
     password = request.form.get('passwordInput')
 
-    connsql3.sign_up(username, numberphone, password, province, permissions, totalEmails, phishingEmails, clickEmails, date, ips)
+    Connsql3.sign_up(username, numberphone, password, province, permissions, totalEmails, phishingEmails, clickEmails, date, ips)
 
     return render_template('login/login.html')
 
@@ -118,12 +115,11 @@ def mostrar_paginas_desactualizadas():
 
 @app.route('/lastVulnerabilities')
 def last_vulnerabilities():
-    data = ejercicio3.last_10_vulnerabilities()
-    if data:
-        return render_template('lastVulnerabilities.html', vulnerabilidades=data)
+    vulnerabilidades = ejercicio3.last_10_vulnerabilities()
+    if vulnerabilidades:
+        return render_template('lastVulnerabilities.html', vulnerabilidades=vulnerabilidades)
     else:
         return 'error', 500
-
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -8,6 +8,18 @@
         .hidden {
             display: none;
         }
+        .circle {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .green {
+            background-color: green;
+        }
+        .red {
+            background-color: red;
+        }
     </style>
 </head>
 <body>
@@ -29,7 +41,7 @@
             {% for i in range(usuarios|length) %}
             <tr>
                 <td>{{ usuarios[i] }}</td>
-                <td class="hidden">{{ phishing_50[i] }}</td>
+                <td class="hidden">{% if phishing_50[i] %}<span class="circle green"></span>{% else %}<span class="circle red"></span>{% endif %}</td>
             </tr>
             {% endfor %}
         </tbody>
