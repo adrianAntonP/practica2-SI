@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/html2pdf.js/dist/html2pdf.bundle.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuarios Críticos</title>
@@ -34,7 +35,15 @@
             {% endfor %}
         </tbody>
     </table>
+    <button onclick="generatePDF()">Descargar PDF</button>
+
     <img id="pieChart" src="{{ url_for('static', filename='pie_chart.png') }}" alt="Gráfico de Pastel" class="hidden">
+       <script>
+        function generatePDF() {
+            var element = document.getElementById("pieChart");
+            html2pdf().from(element).save();
+        }
+        </script>
     <script>
         function toggleColumn() {
             var column = document.getElementById("phishingColumn");
