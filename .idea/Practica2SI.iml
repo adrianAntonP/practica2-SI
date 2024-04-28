@@ -6,11 +6,5 @@
     </content>
     <orderEntry type="jdk" jdkName="Python 3.10" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-<<<<<<< Updated upstream
-=======
-    <orderEntry type="library" name="plotly-latest" level="application" />
-    <orderEntry type="library" name="html2canvas" level="application" />
-    <orderEntry type="library" name="jspdf" level="application" />
->>>>>>> Stashed changes
   </component>
 </module>

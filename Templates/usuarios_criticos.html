@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuarios Críticos</title>
@@ -11,7 +9,6 @@
             display: none;
         }
     </style>
-
 </head>
 <body>
     <h1>Usuarios Críticos</h1>
@@ -37,22 +34,6 @@
             {% endfor %}
         </tbody>
     </table>
-        <img id="imagen" src="/static/img/hide.png" alt="Imagen">
-    <button onclick="downloadPDF()">Descargar PDF</button>
-    <script>
-        function downloadPDF(){
-            const pdf = new jsPDF();
-            const graph = document.getElementById('imagen')
-
-            html2canvas(graph).then(canvas => {
-
-                const imgData = canvas.toDataURL('image/png');
-                pdf.addImage(imgData, 'PNG', 10, 10);
-                pdf.save('grafico.pdf');
-
-            });
-        }
-    </script>
     <img id="pieChart" src="{{ url_for('static', filename='pie_chart.png') }}" alt="Gráfico de Pastel" class="hidden">
     <script>
         function toggleColumn() {
