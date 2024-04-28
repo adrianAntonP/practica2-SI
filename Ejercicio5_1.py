@@ -25,9 +25,9 @@ regr.fit(X_train, y_train)
 # Hacemos prediciones con los datos de testeo
 y_pred = regr.predict(X_test)
 
-print('Coefficients:', regr.coef_)
+print('Coeficiente:', regr.coef_)
 
-print('Mean squared error: %.2f' % mean_squared_error(y_test, y_pred))
+print('Error cuadrático: %.2f' % mean_squared_error(y_test, y_pred))
 
 # Gráfico
 plt.scatter(X_test, y_test, color='black')

@@ -1,17 +1,13 @@
 digraph Tree {
 node [shape=box, style="filled, rounded", color="black", fontname="helvetica"] ;
 edge [fontname="helvetica"] ;
-0 [label="total_emails <= 133.0\ngini = 0.36\nsamples = 18\nvalue = [23, 7]\nclass = No Crítico", fillcolor="#eda775"] ;
-1 [label="phishing_emails <= 11.5\ngini = 0.49\nsamples = 4\nvalue = [3, 4]\nclass = Crítico", fillcolor="#cee6f8"] ;
+0 [label="phishing_emails <= 21.5\ngini = 0.46\nsamples = 19\nvalue = [19, 11]\nclass = No Crítico", fillcolor="#f4caac"] ;
+1 [label="gini = 0.0\nsamples = 5\nvalue = [8, 0]\nclass = No Crítico", fillcolor="#e58139"] ;
 0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
-2 [label="gini = 0.0\nsamples = 1\nvalue = [3, 0]\nclass = No Crítico", fillcolor="#e58139"] ;
-1 -> 2 ;
-3 [label="gini = 0.0\nsamples = 3\nvalue = [0, 4]\nclass = Crítico", fillcolor="#399de5"] ;
-1 -> 3 ;
-4 [label="total_emails <= 444.5\ngini = 0.23\nsamples = 14\nvalue = [20, 3]\nclass = No Crítico", fillcolor="#e99457"] ;
-0 -> 4 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
-5 [label="gini = 0.17\nsamples = 13\nvalue = [20, 2]\nclass = No Crítico", fillcolor="#e88e4d"] ;
-4 -> 5 ;
-6 [label="gini = 0.0\nsamples = 1\nvalue = [0, 1]\nclass = Crítico", fillcolor="#399de5"] ;
-4 -> 6 ;
+2 [label="clicados_emails <= 11.0\ngini = 0.5\nsamples = 14\nvalue = [11, 11]\nclass = No Crítico", fillcolor="#ffffff"] ;
+0 -> 2 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+3 [label="gini = 0.0\nsamples = 2\nvalue = [4, 0]\nclass = No Crítico", fillcolor="#e58139"] ;
+2 -> 3 ;
+4 [label="gini = 0.48\nsamples = 12\nvalue = [7, 11]\nclass = Crítico", fillcolor="#b7dbf6"] ;
+2 -> 4 ;
 }
