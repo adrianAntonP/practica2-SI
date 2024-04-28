@@ -81,7 +81,7 @@ def mostrar_usuarios_criticos():
         num_usuarios_criticos = 5  # Valor default
 
     conexion = Ejercicio1.conexion_bd()
-    usuarios_criticos, phishing_50 = Ejercicio1.obtener_usuarios_con_contrasenas_debiles(conexion.cursor(),
+    usuarios_criticos, phishing_50 = Ejercicio1.obtener_usuarios_criticos(conexion.cursor(),
                                                                                          ruta_diccionario,
                                                                                          top=num_usuarios_criticos)
     conexion.close()
