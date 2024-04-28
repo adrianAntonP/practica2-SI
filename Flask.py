@@ -1,11 +1,15 @@
 import os
 
+import joblib
+import pandas as pd
 from flask import Flask, render_template, request, redirect
 import Ejercicio1
-import ejercicio3
-import conexionSqlite3 as connsql3
 import matplotlib.pyplot as plt
 
+import Ejercicio5_1
+import Ejercicio5_2
+import Ejercicio5_3
+import ejercicio3
 
 #instancia Flask
 app = Flask(__name__, static_url_path='/static')
@@ -35,25 +39,6 @@ def showForgotPass():
 @app.route('/showErrorLogIn')
 def showErrorLogIn():
     return render_template('login/loginError.html')
-
-
-@app.route('/login', methods=['POST'])
-def login():
-    username = request.form.get('username')
-    password = request.form.get('passwordInput')
-
-    if connsql3.check_credentials(username, password):
-        return render_template('index.html')
-    else:
-        return render_template('login/loginError.html')
-
-@app.route('/formSignUp',methods=['POST'])
-def formSignUp():
-    username = request.form.get('username')
-    password = request.form.get('passwordInput')
-    numberphone = request.form.get('NumberPhone')
-    province = request.form.get('Province')
-
 
 
 #ruta para mostrar el top X de usuarios críticos
@@ -104,5 +89,42 @@ def last_vulnerabilities():
         return 'error', 500
 
 
+
+linear_model = joblib.load('linear_model.pkl')
+decision_tree_model = joblib.load('decision_tree_model.pkl')
+random_forest_model = joblib.load('random_forest_model.pkl')
+
+
+def preprocess_input(data):
+
+    return pd.DataFrame(data, index=[0])
+
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+
+@app.route('/predict', methods=['POST'])
+def predict():
+
+    user_data = request.form.to_dict()
+
+
+    input_data = preprocess_input(user_data)
+
+
+    linear_prediction = Ejercicio5_1.predict(input_data)
+    decision_tree_prediction = Ejercicio5_2.predict(input_data)
+    random_forest_prediction = Ejercicio5_3.predict(input_data)
+
+    # Format predictions
+    predictions = {
+        'Linear Model': 'Critical' if linear_prediction[0] else 'Non-Critical',
+        'Decision Tree': 'Critical' if decision_tree_prediction[0] else 'Non-Critical',
+        'Random Forest': 'Critical' if random_forest_prediction[0] else 'Non-Critical'
+    }
+
+    return render_template('esCriticoOno.html', predictions=predictions)
 if __name__ == '__main__':
     app.run(debug=True)

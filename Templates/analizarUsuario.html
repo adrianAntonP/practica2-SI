@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicción de Usuarios Críticos</title>
+</head>
+<body>
+    <h1>Predicción de Usuarios Críticos</h1>
+    <form action="/predict" method="post">
+        <label for="total_emails">Total de Emails:</label>
+        <input type="number" id="total_emails" name="total_emails"><br><br>
+        <label for="phishing_emails">Emails de Phishing:</label>
+        <input type="number" id="phishing_emails" name="phishing_emails"><br><br>
+        <label for="clicked_emails">Emails Clicados:</label>
+        <input type="number" id="clicked_emails" name="clicked_emails"><br><br>
+        <button type="submit">Predecir</button>
+    </form>
+</body>
+</html>
