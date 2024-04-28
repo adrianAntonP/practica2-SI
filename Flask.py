@@ -7,9 +7,7 @@ from sklearn.tree import DecisionTreeClassifier
 import Ejercicio1
 import matplotlib.pyplot as plt
 
-import Ejercicio5_1
-import Ejercicio5_2
-import Ejercicio5_3
+
 import ejercicio3
 import conexionSqlite3 as connsql3
 
