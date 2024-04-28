@@ -20,6 +20,16 @@
         .red {
             background-color: red;
         }
+        .container {
+            display: flex;
+            align-items: flex-start;
+        }
+        .table-container {
+            margin-right: 20px;
+        }
+        .chart-container {
+            flex: 1;
+        }
     </style>
 </head>
 <body>
@@ -30,23 +40,29 @@
         <button type="submit">Mostrar</button>
     </form>
     <button id="toggleButton" onclick="toggleColumn()">Mostrar Phishing</button>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Usuario</th>
-                <th id="phishingColumn" class="hidden">Spam > 50% </th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for i in range(usuarios|length) %}
-            <tr>
-                <td>{{ usuarios[i] }}</td>
-                <td class="hidden">{% if phishing_50[i] %}<span class="circle green"></span>{% else %}<span class="circle red"></span>{% endif %}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <img id="pieChart" src="{{ url_for('static', filename='pie_chart.png') }}" alt="Gráfico de Pastel" class="hidden">
+    <div class="container">
+        <div class="table-container">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th id="phishingColumn" class="hidden">Spam > 50% </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(usuarios|length) %}
+                    <tr>
+                        <td>{{ usuarios[i] }}</td>
+                        <td class="hidden">{% if phishing_50[i] %}<span class="circle green"></span>{% else %}<span class="circle red"></span>{% endif %}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="chart-container">
+            <img id="pieChart" src="{{ url_for('static', filename='pie_chart.png') }}" alt="Gráfico de Pastel" class="hidden">
+        </div>
+    </div>
     <script>
         function toggleColumn() {
             var column = document.getElementById("phishingColumn");
