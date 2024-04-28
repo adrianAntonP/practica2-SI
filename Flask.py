@@ -13,6 +13,7 @@ import Ejercicio5_1
 import Ejercicio5_2
 import Ejercicio5_3
 import ejercicio3
+import conexionSqlite3 as connsql3
 
 #instancia Flask
 app = Flask(__name__, static_url_path='/static')
@@ -42,6 +43,26 @@ def showForgotPass():
 @app.route('/showErrorLogIn')
 def showErrorLogIn():
     return render_template('login/loginError.html')
+
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.form.get('username')
+    password = request.form.get('passwordInput')
+
+    if connsql3.check_credentials(username, password):
+        return render_template('index.html')
+    else:
+        return render_template('login/loginError.html')
+
+@app.route('/formSignUp',methods=['POST'])
+def formSignUp():
+    username = request.form.get('username')
+    password = request.form.get('passwordInput')
+    numberphone = request.form.get('NumberPhone')
+    province = request.form.get('Province')
+
 
 
 #ruta para mostrar el top X de usuarios críticos
