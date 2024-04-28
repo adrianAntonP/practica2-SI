@@ -1,8 +1,12 @@
 import os
+from statistics import LinearRegression
 
 import joblib
 import pandas as pd
 from flask import Flask, render_template, request, redirect
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
+
 import Ejercicio1
 import matplotlib.pyplot as plt
 
@@ -89,42 +93,53 @@ def last_vulnerabilities():
         return 'error', 500
 
 
+@app.route('/analizarUsuario', methods=['GET', 'POST'])
+def analizar_usuario():
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        telefono = request.form['telefono']
+        provincia = request.form['provincia']
+        permisos = float(request.form['permisos'])
+        total_emails = float(request.form['total_emails'])
+        phishing_emails = float(request.form['phishing_emails'])
+        clicados_emails = float(request.form['clicados_emails'])
+        metodo = request.form['metodo']
 
-linear_model = joblib.load('linear_model.pkl')
-decision_tree_model = joblib.load('decision_tree_model.pkl')
-random_forest_model = joblib.load('random_forest_model.pkl')
+#analizar
+        if metodo == 'regresion_lineal':
+            resultado = analizar_usuario_regresion_lineal(permisos, total_emails, phishing_emails, clicados_emails)
+        elif metodo == 'decision_tree':
+            resultado = analizar_usuario_decision_tree(total_emails, phishing_emails, clicados_emails)
+        elif metodo == 'random_forest':
+            resultado = analizar_usuario_random_forest(total_emails, phishing_emails, clicados_emails)
+        else:
+            resultado = "Método no válido"
+
+        return render_template('esCriticoOno.html', nombre=nombre, resultado=resultado)
+    else:
+        return render_template('analizarUsuario.html')
+
+def analizar_usuario_regresion_lineal(permisos, total_emails, phishing_emails, clicados_emails):
+    regr = LinearRegression()
+    regr.fit([[clicados_emails / phishing_emails]], [0])  # Se ajusta a 0 porque no se usa en la predicción
+    critico = regr.predict([[clicados_emails / phishing_emails]])
+    return "Crítico" if critico > 0.5 else "No Crítico"
+
+def analizar_usuario_decision_tree(total_emails, phishing_emails, clicados_emails):
+    clf = DecisionTreeClassifier()
+    clf.fit([[total_emails, phishing_emails, clicados_emails]], [0])  # Se ajusta a 0 porque no se usa en la predicción
+    critico = clf.predict([[total_emails, phishing_emails, clicados_emails]])
+    return "Crítico" if critico == 1 else "No Crítico"
+
+def analizar_usuario_random_forest(total_emails, phishing_emails, clicados_emails):
+    # carga entrenamiento y guardado con joab
+
+    clf = RandomForestClassifier()
+    clf.fit([[total_emails, phishing_emails, clicados_emails]], [0])  # Se ajusta a 0 porque no se usa en la predicción
+    critico = clf.predict([[total_emails, phishing_emails, clicados_emails]])
+    return "Crítico" if critico == 1 else "No Crítico"
 
 
-def preprocess_input(data):
 
-    return pd.DataFrame(data, index=[0])
-
-
-@app.route('/')
-def home():
-    return render_template('index.html')
-
-
-@app.route('/predict', methods=['POST'])
-def predict():
-
-    user_data = request.form.to_dict()
-
-
-    input_data = preprocess_input(user_data)
-
-
-    linear_prediction = Ejercicio5_1.predict(input_data)
-    decision_tree_prediction = Ejercicio5_2.predict(input_data)
-    random_forest_prediction = Ejercicio5_3.predict(input_data)
-
-    # Format predictions
-    predictions = {
-        'Linear Model': 'Critical' if linear_prediction[0] else 'Non-Critical',
-        'Decision Tree': 'Critical' if decision_tree_prediction[0] else 'Non-Critical',
-        'Random Forest': 'Critical' if random_forest_prediction[0] else 'Non-Critical'
-    }
-
-    return render_template('esCriticoOno.html', predictions=predictions)
 if __name__ == '__main__':
     app.run(debug=True)

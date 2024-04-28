@@ -3,18 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predicción de Usuarios Críticos</title>
+    <title>Formulario de Usuario</title>
 </head>
 <body>
-    <h1>Predicción de Usuarios Críticos</h1>
-    <form action="/predict" method="post">
-        <label for="total_emails">Total de Emails:</label>
+    <h1>Insertar Usuario</h1>
+    <form action="/esCriticoOno" method="post">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre"><br><br>
+        <label for="telefono">Teléfono:</label>
+        <input type="text" id="telefono" name="telefono"><br><br>
+        <label for="provincia">Provincia:</label>
+        <input type="text" id="provincia" name="provincia"><br><br>
+        <label for="permisos">Permisos:</label>
+        <input type="number" id="permisos" name="permisos"><br><br>
+        <label for="total_emails">Total de Emails Enviados:</label>
         <input type="number" id="total_emails" name="total_emails"><br><br>
-        <label for="phishing_emails">Emails de Phishing:</label>
+        <label for="phishing_emails">Total de Emails con Phishing:</label>
         <input type="number" id="phishing_emails" name="phishing_emails"><br><br>
-        <label for="clicked_emails">Emails Clicados:</label>
-        <input type="number" id="clicked_emails" name="clicked_emails"><br><br>
-        <button type="submit">Predecir</button>
+        <label for="clicados_emails">Total de Emails Clicados:</label>
+        <input type="number" id="clicados_emails" name="clicados_emails"><br><br>
+        <label for="metodo">Método de IA:</label>
+        <select id="metodo" name="metodo">
+            <option value="regresion_lineal">Regresión Lineal</option>
+            <option value="decision_tree">Árbol de Decisión</option>
+            <option value="random_forest">Random Forest</option>
+        </select><br><br>
+        <input type="submit" value="Enviar">
     </form>
 </body>
 </html>
+
