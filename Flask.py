@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 
 import ejercicio3
-import conexionSqlite3 as connsql3
+import ConexionSqlite3 as Connsql3
 
 # instancia Flask
 app = Flask(__name__, static_url_path='/static')
@@ -48,7 +48,7 @@ def login():
     username = request.form.get('username')
     password = request.form.get('passwordInput')
 
-    if connsql3.check_credentials(username, password):
+    if Connsql3.check_credentials(username, password):
         return render_template('index.html')
     else:
         return render_template('login/loginError.html')
@@ -67,7 +67,7 @@ def formSignUp():
     permissions = request.form.get('Permissions')
     password = request.form.get('passwordInput')
 
-    connsql3.sign_up(username, numberphone, password, province, permissions, totalEmails, phishingEmails, clickEmails, date, ips)
+    Connsql3.sign_up(username, numberphone, password, province, permissions, totalEmails, phishingEmails, clickEmails, date, ips)
 
     return render_template('login/login.html')
 
