@@ -92,7 +92,6 @@ def last_vulnerabilities():
     else:
         return 'error', 500
 
-
 @app.route('/analizarUsuario', methods=['GET', 'POST'])
 def analizar_usuario():
     if request.method == 'POST':
