@@ -1,11 +1,12 @@
 import os
 
 import googlemaps
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session, url_for, flash
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 import Ejercicio1
 import matplotlib.pyplot as plt
+from functools import wraps
 
 
 import ejercicio3
@@ -15,9 +16,18 @@ import Ejercicio4
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'flaskeandobby_81'
 
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'logged_in' not in session:
+            flash('Debes iniciar sesión para acceder a esta página.', 'error')
+            return redirect(url_for('showLogin'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 # ruta principal del panel de control
 @app.route('/')
+@login_required
 def index():
     return render_template('index.html')
 
@@ -42,6 +52,7 @@ def showErrorLogIn():
     return render_template('login/loginError.html')
 
 @app.route('/showMap')
+@login_required
 def showMap():
     usuarios_criticos = Ejercicio4.getCriticalUser()
 
@@ -69,9 +80,17 @@ def login():
     password = request.form.get('passwordInput')
 
     if Ejercicio4.check_credentials(username, password):
+        session['username'] = username
         return render_template('index.html')
     else:
         return render_template('login/loginError.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return render_template('login/loginError.html')
+
+
 
 
 @app.route('/formSignUp', methods=['GET', 'POST'])
@@ -94,6 +113,7 @@ def formSignUp():
 
 # ruta para mostrar el top X de usuarios críticos
 @app.route('/usuarios_criticos', methods=['GET', 'POST'])
+@login_required
 def mostrar_usuarios_criticos():
     ruta_diccionario = 'rockyou-20.txt'  # Ruta al diccionario de contraseñas
     if request.method == 'POST':
@@ -121,6 +141,7 @@ def mostrar_usuarios_criticos():
 
 # Define la ruta para mostrar el top X de páginas web desactualizadas
 @app.route('/paginas_desactualizadas', methods=['GET', 'POST'])
+@login_required
 def mostrar_paginas_desactualizadas():
     if request.method == 'POST':
         num_paginas_desactualizadas = int(request.form['num_paginas'])
@@ -135,6 +156,7 @@ def mostrar_paginas_desactualizadas():
 
 
 @app.route('/lastVulnerabilities')
+@login_required
 def last_vulnerabilities():
     vulnerabilidades = ejercicio3.last_10_vulnerabilities()
     if vulnerabilidades:
@@ -144,6 +166,7 @@ def last_vulnerabilities():
 
 
 @app.route('/analizarUsuario', methods=['GET', 'POST'])
+@login_required
 def formulario_usuario():
     if request.method == 'POST':
         nombre = request.form['nombre']
