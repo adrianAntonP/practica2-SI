@@ -41,7 +41,7 @@
             {% for i in range(usuarios|length) %}
             <tr>
                 <td>{{ usuarios[i] }}</td>
-                <td class="hidden">{% if phishing_50[i] > 50 %}<span class="circle red"></span>{% else %}<span class="circle green"></span>{% endif %}</td>
+                <td class="hidden">{% if phishing_50[i] %}<span class="circle green"></span>{% else %}<span class="circle red"></span>{% endif %}</td>
             </tr>
             {% endfor %}
         </tbody>
