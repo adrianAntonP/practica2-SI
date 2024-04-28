@@ -40,7 +40,7 @@ def check_credentials(username, password):
         return False
 
 
-def sign_up(username, telefono, contrasena, provincia, permisos, emailtotal, emailphishing, emailclicados, fechas, ips ):
+def sign_up(username, telefono, contrasena, provincia, permisos, emailtotal, emailphishing, emailclicados, fechas, ips):
     conn = conectar_db()
     c = conn.cursor()
 
