@@ -2,9 +2,8 @@ import os
 
 from flask import Flask, render_template, request, redirect
 import Ejercicio1
-
 import ejercicio3
-
+import conexionSqlite3 as connsql3
 import matplotlib.pyplot as plt
 
 
@@ -36,6 +35,25 @@ def showForgotPass():
 @app.route('/showErrorLogIn')
 def showErrorLogIn():
     return render_template('login/loginError.html')
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.form.get('username')
+    password = request.form.get('passwordInput')
+
+    if connsql3.check_credentials(username, password):
+        return render_template('index.html')
+    else:
+        return render_template('login/loginError.html')
+
+@app.route('/formSignUp',methods=['POST'])
+def formSignUp():
+    username = request.form.get('username')
+    password = request.form.get('passwordInput')
+    numberphone = request.form.get('NumberPhone')
+    province = request.form.get('Province')
+
 
 
 #ruta para mostrar el top X de usuarios críticos
