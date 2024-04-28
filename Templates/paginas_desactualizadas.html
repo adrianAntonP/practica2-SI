@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/paginasDes.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
     <title>Páginas Desactualizadas</title>
 
 </head>
@@ -14,7 +16,7 @@
         <input type="number" id="num_paginas" name="num_paginas" min="1" required>
         <button type="submit">Mostrar</button>
     </form>
-    <table>
+    <table id="dataTable">
         <thead>
             <tr>
                 <th>Web</th>
@@ -33,6 +35,13 @@
             </tr>
             {% endfor %}
         </tbody>
+        <button id="pdfButton" onclick="generatePDF()" >Descargar PDF</button>
     </table>
+     <script>
+        function generatePDF() {
+            var element = document.getElementById("dataTable");
+            html2pdf().from(element).save();
+        }
+     </script>
 </body>
 </html>
