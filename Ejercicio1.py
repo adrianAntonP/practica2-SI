@@ -2,8 +2,8 @@ import sqlite3
 import pandas as pd
 import hashlib
 
-#Función para obtener el top X de usuarios con contraseñas débiles
-def obtener_usuarios_con_contrasenas_debiles(cur, ruta_diccionario, top):
+#Función para obtener el top X de usuarios críticos
+def obtener_usuarios_criticos(cur, ruta_diccionario, top):
     cursor = cur.execute("SELECT usuario, contrasena, phishing_emails, clicados_emails  FROM usuarios")
     df_users = pd.DataFrame(cursor.fetchall(), columns=['usuario', 'contrasena', 'phishing_emails', 'clicados_emails'])
 
@@ -11,11 +11,9 @@ def obtener_usuarios_con_contrasenas_debiles(cur, ruta_diccionario, top):
     df_users["passwd_debil"] = df_users["contrasena"].apply(lambda x: es_contrasena_debil(x, contrasenas_diccionario_hasheadas))
     df_users["prob_phishing"] = df_users["clicados_emails"]/df_users["phishing_emails"]
     df_users["phishing_50"] = df_users["prob_phishing"].apply(lambda x: True if x > 0.5 else False)
-    usuarios_criticos_df = df_users[df_users["passwd_debil"]].sort_values(by="prob_phishing", ascending=False).head(top)  # Obtener solo los nombres de usuario
+    usuarios_criticos_df = df_users[df_users["passwd_debil"]].sort_values(by="prob_phishing", ascending=False).head(top)
     usuarios_criticos = usuarios_criticos_df["usuario"].tolist()
     phishing_50 = usuarios_criticos_df["phishing_50"].tolist()
-    print("Longitud de usuarios_criticos:", len(usuarios_criticos))
-    print("Longitud de phishing_50:", len(phishing_50))
 
     return usuarios_criticos, phishing_50
 
@@ -66,7 +64,7 @@ if __name__ == '__main__':
     num_usuarios_criticos = int(input("Introduce el número de usuarios críticos que deseas ver: "))
 
     #print result
-    usuarios_con_contrasenas_debiles = obtener_usuarios_con_contrasenas_debiles(conexion.cursor(), ruta_diccionario, top=num_usuarios_criticos)
+    usuarios_con_contrasenas_debiles = obtener_usuarios_criticos(conexion.cursor(), ruta_diccionario, top=num_usuarios_criticos)
     print("\nUsuarios con contraseñas débiles:")
     print(usuarios_con_contrasenas_debiles)
 

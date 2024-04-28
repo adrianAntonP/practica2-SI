@@ -83,11 +83,11 @@ def mostrar_usuarios_criticos():
     else:
         num_usuarios_criticos = 5  # Valor default
 
-    conexion = Ejercicio1.conexion_bd()  # conexión a  base de datos
+    conexion = Ejercicio1.conexion_bd()
     usuarios_criticos, phishing_50 = Ejercicio1.obtener_usuarios_con_contrasenas_debiles(conexion.cursor(),
                                                                                          ruta_diccionario,
                                                                                          top=num_usuarios_criticos)
-    conexion.close()  # Cerrar conexión la base de datos
+    conexion.close()
     # Generar gráfico de pastel
     plt.figure(figsize=(6, 6))
     plt.pie([phishing_50.count(True), phishing_50.count(False)], labels=['Spam > 50%', 'Spam <= 50%'],
@@ -98,7 +98,6 @@ def mostrar_usuarios_criticos():
     static_dir = os.path.join(app.root_path, 'static')
     image_path = os.path.join(static_dir, 'pie_chart.png')
     plt.savefig(image_path)
-    # Convertir el DataFrame en una lista
     return render_template('usuarios_criticos.html', usuarios=usuarios_criticos, phishing_50=phishing_50)
 
 
