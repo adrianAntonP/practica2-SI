@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 
 import ejercicio3
-import ConexionSqlite3 as Connsql3
+import conexionSqlite3 as Connsql3
 
 # instancia Flask
 app = Flask(__name__, static_url_path='/static')
