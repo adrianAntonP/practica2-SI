@@ -5,9 +5,9 @@ import pandas as pd
 from flask import Flask, render_template, request, redirect
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
-
 import Ejercicio1
 import matplotlib.pyplot as plt
+
 
 import Ejercicio5_1
 import Ejercicio5_2
@@ -45,7 +45,6 @@ def showErrorLogIn():
     return render_template('login/loginError.html')
 
 
-
 @app.route('/login', methods=['POST'])
 def login():
     username = request.form.get('username')
@@ -58,10 +57,16 @@ def login():
 
 @app.route('/formSignUp',methods=['POST'])
 def formSignUp():
-    username = request.form.get('username')
-    password = request.form.get('passwordInput')
-    numberphone = request.form.get('NumberPhone')
+    username = request.form.get('Username')
     province = request.form.get('Province')
+
+    ips = request.form.get('ips')
+    numberphone = request.form.get('NumberPhone')
+
+
+    date = request.form.get('Dates')
+    permi
+    password = request.form.get('passwordInput')
 
 
 
