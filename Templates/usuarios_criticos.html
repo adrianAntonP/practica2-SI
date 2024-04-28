@@ -34,8 +34,8 @@
             </tr>
             {% endfor %}
         </tbody>
+        <button id="pdfButton" onclick="generatePDF()">Descargar PDF</button>
     </table>
-    <button onclick="generatePDF()">Descargar PDF</button>
 
     <img id="pieChart" src="{{ url_for('static', filename='pie_chart.png') }}" alt="Gráfico de Pastel" class="hidden">
        <script>
@@ -43,23 +43,24 @@
             var element = document.getElementById("pieChart");
             html2pdf().from(element).save();
         }
-        </script>
-    <script>
-        function toggleColumn() {
-            var column = document.getElementById("phishingColumn");
-            var cells = document.querySelectorAll("td:nth-child(2)");
-            var pieChart = document.getElementById("pieChart");
+       function toggleColumn() {
+        var column = document.getElementById("phishingColumn");
+        var cells = document.querySelectorAll("td:nth-child(2)");
+        var pieChart = document.getElementById("pieChart");
+        var pdfButton = document.getElementById("pdfButton");
 
-            if (column.classList.contains("hidden")) {
-                column.classList.remove("hidden");
-                cells.forEach(cell => cell.classList.remove("hidden"));
-                pieChart.classList.remove("hidden"); // Mostrar el gráfico de pastel
-            } else {
-                column.classList.add("hidden");
-                cells.forEach(cell => cell.classList.add("hidden"));
-                pieChart.classList.add("hidden"); // Ocultar el gráfico de pastel
-            }
+        if (column.classList.contains("hidden")) {
+            column.classList.remove("hidden");
+            cells.forEach(cell => cell.classList.remove("hidden"));
+            pieChart.classList.remove("hidden");
+            pdfButton.disabled = false;
+        } else {
+            column.classList.add("hidden");
+            cells.forEach(cell => cell.classList.add("hidden"));
+            pieChart.classList.add("hidden");
+            pdfButton.disabled = true;
         }
+}
     </script>
 </body>
 </html>
