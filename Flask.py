@@ -121,5 +121,26 @@ def last_vulnerabilities():
     else:
         return 'error', 500
 
+
+@app.route('/analizarUsuario', methods=['GET', 'POST'])
+def formulario_usuario():
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        telefono = request.form['telefono']
+        provincia = request.form['provincia']
+        permisos = request.form['permisos']
+        total_emails = request.form['total_emails']
+        phishing_emails = request.form['phishing_emails']
+        clicados_emails = request.form['clicados_emails']
+        return render_template('esCriticoOno.html')
+
+    return render_template('analizarUsuario.html')
+
+
+
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
