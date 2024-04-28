@@ -1,9 +1,13 @@
 import sqlite3
 import json
 
+def conectar_db():
+    con = sqlite3.connect('ETL_system.db')
+    return con
+
 def create_db_table():
-    # Connect to SQLite database
-    conn = sqlite3.connect('ETL_system.db')
+    # Connect to database
+    conn = conectar_db()
     c = conn.cursor()
     
     # Create table
@@ -18,6 +22,35 @@ def create_db_table():
     
     conn.commit()
     conn.close()
+
+def check_credentials(username, password):
+    #Connect to database
+    conn = conectar_db()
+    c = conn.cursor()
+
+    c.execute("SELECT contrasena FROM usuarios WHERE usuario = ?", (username,))
+    result = c.fetchone()
+
+    if result and result[0] == password:
+        conn.close()
+        return True
+    else:
+        conn.close()
+        return False
+
+
+def sign_up(username, telefono, contrasena, provincia, permisos, emailtotal, emailphishing, emailclicados, fechas, ips ):
+    conn = conectar_db()
+    c = conn.cursor()
+
+    c.execute('SELECT COUNT(*) FROM usuarios WHERE usuario = ?', (username,))
+    c.fetchone()
+
+    if c.fetchone()[0] == 0:
+        c.execute("INSERT OR IGNORE INTO usuarios VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (username, telefono, contrasena, provincia, permisos, emailtotal, emailphishing, emailclicados, fechas, ips))
+
+    c.close()
+
 
 def insert_data_users(json_file):
     # Connect to SQLite database
@@ -48,6 +81,7 @@ def insert_data_users(json_file):
     
     conn.commit()
     conn.close()
+
 
 def insert_data_legal(json_file):
     # Connect to SQLite database
